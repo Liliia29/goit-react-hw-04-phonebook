@@ -1,24 +1,21 @@
-import React, { Component } from 'react';
+
 import PropTypes from 'prop-types';
 import { Formik, ErrorMessage } from 'formik';
 import { Button, Input, Label, StyledForm } from './ContactForm.styled';
 
-export class ContactForm extends Component {
-  state = {
-    name: '',
-    number: '',
-  };
+const defaultValues = {
+  name: '',
+  number: '',
+}
 
-  handleSubmitForm = (values, action) => {
-    this.props.onSubmit(values);
+export const ContactForm = ({onSubmit}) => {
+  const handleSubmitForm = (values, action) => {
+    onSubmit(values);
     action.resetForm();
   };
 
-  render() {
-    const { name, number } = this.state;
-
-    return (
-      <Formik initialValues={{ name, number }} onSubmit={this.handleSubmitForm}>
+     return (
+      <Formik initialValues={{ defaultValues}} onSubmit={handleSubmitForm}>
         <StyledForm>
           <Label>
             Name
@@ -45,10 +42,9 @@ export class ContactForm extends Component {
           <Button type="submit">Add Contact</Button>
         </StyledForm>
       </Formik>
-    );
-  }
-}
+    ); 
+};
 
 ContactForm.propTypes = {
-  handleSubmitForm: PropTypes.func,
+  onSubmit: PropTypes.func,
 };
